@@ -1,6 +1,8 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { take, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ClientService } from 'app/entities/client/client.service';
 import { IClient, Client } from 'app/shared/model/client.model';
 
@@ -11,6 +13,7 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: IClient;
     let expectedResult;
+    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -19,13 +22,19 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(ClientService);
       httpMock = injector.get(HttpTestingController);
+      currentDate = moment();
 
-      elemDefault = new Client('ID', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new Client('ID', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            dateNaissanceClient: currentDate.format(DATE_TIME_FORMAT)
+          },
+          elemDefault
+        );
         service
           .find('123')
           .pipe(take(1))
@@ -39,11 +48,17 @@ describe('Service Tests', () => {
       it('should create a Client', () => {
         const returnedFromService = Object.assign(
           {
-            id: 'ID'
+            id: 'ID',
+            dateNaissanceClient: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateNaissanceClient: currentDate
+          },
+          returnedFromService
+        );
         service
           .create(new Client(null))
           .pipe(take(1))
@@ -59,7 +74,7 @@ describe('Service Tests', () => {
             idClient: 'BBBBBB',
             nomClient: 'BBBBBB',
             prenomClient: 'BBBBBB',
-            dateNaissanceClient: 'BBBBBB',
+            dateNaissanceClient: currentDate.format(DATE_TIME_FORMAT),
             adresseClient: 'BBBBBB',
             villeClient: 'BBBBBB',
             paysClient: 'BBBBBB',
@@ -69,7 +84,12 @@ describe('Service Tests', () => {
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateNaissanceClient: currentDate
+          },
+          returnedFromService
+        );
         service
           .update(expected)
           .pipe(take(1))
@@ -85,7 +105,7 @@ describe('Service Tests', () => {
             idClient: 'BBBBBB',
             nomClient: 'BBBBBB',
             prenomClient: 'BBBBBB',
-            dateNaissanceClient: 'BBBBBB',
+            dateNaissanceClient: currentDate.format(DATE_TIME_FORMAT),
             adresseClient: 'BBBBBB',
             villeClient: 'BBBBBB',
             paysClient: 'BBBBBB',
@@ -94,7 +114,12 @@ describe('Service Tests', () => {
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateNaissanceClient: currentDate
+          },
+          returnedFromService
+        );
         service
           .query(expected)
           .pipe(

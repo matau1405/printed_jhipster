@@ -1,8 +1,12 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { take, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { CommandeService } from 'app/entities/commande/commande.service';
 import { ICommande, Commande } from 'app/shared/model/commande.model';
+import { ModeDeLivraison } from 'app/shared/model/enumerations/mode-de-livraison.model';
+import { StatusCommande } from 'app/shared/model/enumerations/status-commande.model';
 
 describe('Service Tests', () => {
   describe('Commande Service', () => {
@@ -11,6 +15,7 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: ICommande;
     let expectedResult;
+    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -19,13 +24,29 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(CommandeService);
       httpMock = injector.get(HttpTestingController);
+      currentDate = moment();
 
-      elemDefault = new Commande('ID', 'AAAAAAA', 'AAAAAAA', 0, 0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA');
+      elemDefault = new Commande(
+        'ID',
+        'AAAAAAA',
+        currentDate,
+        0,
+        0,
+        'AAAAAAA',
+        'AAAAAAA',
+        ModeDeLivraison.LivraisonExpress,
+        StatusCommande.EnCoursDeValidation
+      );
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            dateCmd: currentDate.format(DATE_TIME_FORMAT)
+          },
+          elemDefault
+        );
         service
           .find('123')
           .pipe(take(1))
@@ -39,11 +60,17 @@ describe('Service Tests', () => {
       it('should create a Commande', () => {
         const returnedFromService = Object.assign(
           {
-            id: 'ID'
+            id: 'ID',
+            dateCmd: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateCmd: currentDate
+          },
+          returnedFromService
+        );
         service
           .create(new Commande(null))
           .pipe(take(1))
@@ -57,19 +84,23 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             idCmd: 'BBBBBB',
-            dateCmd: 'BBBBBB',
+            dateCmd: currentDate.format(DATE_TIME_FORMAT),
             montantCmd: 1,
             delaiLivraisonCmd: 1,
             etatLivraisonCmd: 'BBBBBB',
             lieuLivraisonCmd: 'BBBBBB',
             modeLivraisonCmd: 'BBBBBB',
-            prixTotalCmd: 1,
-            modePaiement: 'BBBBBB'
+            status: 'BBBBBB'
           },
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateCmd: currentDate
+          },
+          returnedFromService
+        );
         service
           .update(expected)
           .pipe(take(1))
@@ -83,18 +114,22 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             idCmd: 'BBBBBB',
-            dateCmd: 'BBBBBB',
+            dateCmd: currentDate.format(DATE_TIME_FORMAT),
             montantCmd: 1,
             delaiLivraisonCmd: 1,
             etatLivraisonCmd: 'BBBBBB',
             lieuLivraisonCmd: 'BBBBBB',
             modeLivraisonCmd: 'BBBBBB',
-            prixTotalCmd: 1,
-            modePaiement: 'BBBBBB'
+            status: 'BBBBBB'
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateCmd: currentDate
+          },
+          returnedFromService
+        );
         service
           .query(expected)
           .pipe(

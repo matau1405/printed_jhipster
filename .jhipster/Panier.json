@@ -14,7 +14,7 @@
             "relationshipName": "produits"
         }
     ],
-    "changelogDate": "20191219170359",
+    "changelogDate": "20191219180416",
     "entityTableName": "panier",
     "dto": "no",
     "pagination": "no",

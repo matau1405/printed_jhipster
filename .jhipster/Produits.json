@@ -40,6 +40,11 @@
         {
             "fieldName": "imagePersonnalisation",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "taille",
+            "fieldType": "Taille",
+            "fieldValues": "XS,S,M,L,XL,XXL"
         }
     ],
     "relationships": [
@@ -50,7 +55,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20191219170358",
+    "changelogDate": "20191219180415",
     "entityTableName": "produits",
     "dto": "no",
     "pagination": "no",

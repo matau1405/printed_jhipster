@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { take, map } from 'rxjs/operators';
 import { ProduitsService } from 'app/entities/produits/produits.service';
 import { IProduits, Produits } from 'app/shared/model/produits.model';
+import { Taille } from 'app/shared/model/enumerations/taille.model';
 
 describe('Service Tests', () => {
   describe('Produits Service', () => {
@@ -20,7 +21,20 @@ describe('Service Tests', () => {
       service = injector.get(ProduitsService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Produits('ID', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false, 0, 'AAAAAAA', false, 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new Produits(
+        'ID',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        false,
+        0,
+        'AAAAAAA',
+        false,
+        'AAAAAAA',
+        'AAAAAAA',
+        Taille.XS
+      );
     });
 
     describe('Service methods', () => {
@@ -65,7 +79,8 @@ describe('Service Tests', () => {
             marque: 'BBBBBB',
             personnalisable: true,
             imageProd: 'BBBBBB',
-            imagePersonnalisation: 'BBBBBB'
+            imagePersonnalisation: 'BBBBBB',
+            taille: 'BBBBBB'
           },
           elemDefault
         );
@@ -92,7 +107,8 @@ describe('Service Tests', () => {
             marque: 'BBBBBB',
             personnalisable: true,
             imageProd: 'BBBBBB',
-            imagePersonnalisation: 'BBBBBB'
+            imagePersonnalisation: 'BBBBBB',
+            taille: 'BBBBBB'
           },
           elemDefault
         );

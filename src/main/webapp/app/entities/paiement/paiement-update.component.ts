@@ -5,6 +5,8 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { IPaiement, Paiement } from 'app/shared/model/paiement.model';
 import { PaiementService } from './paiement.service';
 
@@ -39,7 +41,7 @@ export class PaiementUpdateComponent implements OnInit {
       posseseurCarte: paiement.posseseurCarte,
       typeCarte: paiement.typeCarte,
       numeroCarte: paiement.numeroCarte,
-      dateExp: paiement.dateExp,
+      dateExp: paiement.dateExp != null ? paiement.dateExp.format(DATE_TIME_FORMAT) : null,
       crypotogramme: paiement.crypotogramme
     });
   }
@@ -65,7 +67,7 @@ export class PaiementUpdateComponent implements OnInit {
       posseseurCarte: this.editForm.get(['posseseurCarte']).value,
       typeCarte: this.editForm.get(['typeCarte']).value,
       numeroCarte: this.editForm.get(['numeroCarte']).value,
-      dateExp: this.editForm.get(['dateExp']).value,
+      dateExp: this.editForm.get(['dateExp']).value != null ? moment(this.editForm.get(['dateExp']).value, DATE_TIME_FORMAT) : undefined,
       crypotogramme: this.editForm.get(['crypotogramme']).value
     };
   }

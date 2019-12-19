@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
 
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static fr.inti.printed.web.rest.TestUtil.createFormattingConversionService;
@@ -41,8 +43,8 @@ public class ClientResourceIT {
     private static final String DEFAULT_PRENOM_CLIENT = "AAAAAAAAAA";
     private static final String UPDATED_PRENOM_CLIENT = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DATE_NAISSANCE_CLIENT = "AAAAAAAAAA";
-    private static final String UPDATED_DATE_NAISSANCE_CLIENT = "BBBBBBBBBB";
+    private static final Instant DEFAULT_DATE_NAISSANCE_CLIENT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_NAISSANCE_CLIENT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String DEFAULT_ADRESSE_CLIENT = "AAAAAAAAAA";
     private static final String UPDATED_ADRESSE_CLIENT = "BBBBBBBBBB";
@@ -209,7 +211,7 @@ public class ClientResourceIT {
             .andExpect(jsonPath("$.[*].idClient").value(hasItem(DEFAULT_ID_CLIENT)))
             .andExpect(jsonPath("$.[*].nomClient").value(hasItem(DEFAULT_NOM_CLIENT)))
             .andExpect(jsonPath("$.[*].prenomClient").value(hasItem(DEFAULT_PRENOM_CLIENT)))
-            .andExpect(jsonPath("$.[*].dateNaissanceClient").value(hasItem(DEFAULT_DATE_NAISSANCE_CLIENT)))
+            .andExpect(jsonPath("$.[*].dateNaissanceClient").value(hasItem(DEFAULT_DATE_NAISSANCE_CLIENT.toString())))
             .andExpect(jsonPath("$.[*].adresseClient").value(hasItem(DEFAULT_ADRESSE_CLIENT)))
             .andExpect(jsonPath("$.[*].villeClient").value(hasItem(DEFAULT_VILLE_CLIENT)))
             .andExpect(jsonPath("$.[*].paysClient").value(hasItem(DEFAULT_PAYS_CLIENT)))
@@ -230,7 +232,7 @@ public class ClientResourceIT {
             .andExpect(jsonPath("$.idClient").value(DEFAULT_ID_CLIENT))
             .andExpect(jsonPath("$.nomClient").value(DEFAULT_NOM_CLIENT))
             .andExpect(jsonPath("$.prenomClient").value(DEFAULT_PRENOM_CLIENT))
-            .andExpect(jsonPath("$.dateNaissanceClient").value(DEFAULT_DATE_NAISSANCE_CLIENT))
+            .andExpect(jsonPath("$.dateNaissanceClient").value(DEFAULT_DATE_NAISSANCE_CLIENT.toString()))
             .andExpect(jsonPath("$.adresseClient").value(DEFAULT_ADRESSE_CLIENT))
             .andExpect(jsonPath("$.villeClient").value(DEFAULT_VILLE_CLIENT))
             .andExpect(jsonPath("$.paysClient").value(DEFAULT_PAYS_CLIENT))

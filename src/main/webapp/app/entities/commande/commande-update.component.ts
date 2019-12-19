@@ -6,6 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { ICommande, Commande } from 'app/shared/model/commande.model';
 import { CommandeService } from './commande.service';
@@ -34,8 +36,7 @@ export class CommandeUpdateComponent implements OnInit {
     etatLivraisonCmd: [],
     lieuLivraisonCmd: [],
     modeLivraisonCmd: [],
-    prixTotalCmd: [],
-    modePaiement: [],
+    status: [null, [Validators.required]],
     panier: [],
     paiement: []
   });
@@ -110,14 +111,13 @@ export class CommandeUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: commande.id,
       idCmd: commande.idCmd,
-      dateCmd: commande.dateCmd,
+      dateCmd: commande.dateCmd != null ? commande.dateCmd.format(DATE_TIME_FORMAT) : null,
       montantCmd: commande.montantCmd,
       delaiLivraisonCmd: commande.delaiLivraisonCmd,
       etatLivraisonCmd: commande.etatLivraisonCmd,
       lieuLivraisonCmd: commande.lieuLivraisonCmd,
       modeLivraisonCmd: commande.modeLivraisonCmd,
-      prixTotalCmd: commande.prixTotalCmd,
-      modePaiement: commande.modePaiement,
+      status: commande.status,
       panier: commande.panier,
       paiement: commande.paiement
     });
@@ -142,14 +142,13 @@ export class CommandeUpdateComponent implements OnInit {
       ...new Commande(),
       id: this.editForm.get(['id']).value,
       idCmd: this.editForm.get(['idCmd']).value,
-      dateCmd: this.editForm.get(['dateCmd']).value,
+      dateCmd: this.editForm.get(['dateCmd']).value != null ? moment(this.editForm.get(['dateCmd']).value, DATE_TIME_FORMAT) : undefined,
       montantCmd: this.editForm.get(['montantCmd']).value,
       delaiLivraisonCmd: this.editForm.get(['delaiLivraisonCmd']).value,
       etatLivraisonCmd: this.editForm.get(['etatLivraisonCmd']).value,
       lieuLivraisonCmd: this.editForm.get(['lieuLivraisonCmd']).value,
       modeLivraisonCmd: this.editForm.get(['modeLivraisonCmd']).value,
-      prixTotalCmd: this.editForm.get(['prixTotalCmd']).value,
-      modePaiement: this.editForm.get(['modePaiement']).value,
+      status: this.editForm.get(['status']).value,
       panier: this.editForm.get(['panier']).value,
       paiement: this.editForm.get(['paiement']).value
     };

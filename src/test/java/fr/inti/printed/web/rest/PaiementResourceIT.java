@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
 
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static fr.inti.printed.web.rest.TestUtil.createFormattingConversionService;
@@ -41,8 +43,8 @@ public class PaiementResourceIT {
     private static final Long DEFAULT_NUMERO_CARTE = 1L;
     private static final Long UPDATED_NUMERO_CARTE = 2L;
 
-    private static final String DEFAULT_DATE_EXP = "AAAAAAAAAA";
-    private static final String UPDATED_DATE_EXP = "BBBBBBBBBB";
+    private static final Instant DEFAULT_DATE_EXP = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_EXP = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Long DEFAULT_CRYPOTOGRAMME = 1L;
     private static final Long UPDATED_CRYPOTOGRAMME = 2L;
@@ -168,7 +170,7 @@ public class PaiementResourceIT {
             .andExpect(jsonPath("$.[*].posseseurCarte").value(hasItem(DEFAULT_POSSESEUR_CARTE)))
             .andExpect(jsonPath("$.[*].typeCarte").value(hasItem(DEFAULT_TYPE_CARTE)))
             .andExpect(jsonPath("$.[*].numeroCarte").value(hasItem(DEFAULT_NUMERO_CARTE.intValue())))
-            .andExpect(jsonPath("$.[*].dateExp").value(hasItem(DEFAULT_DATE_EXP)))
+            .andExpect(jsonPath("$.[*].dateExp").value(hasItem(DEFAULT_DATE_EXP.toString())))
             .andExpect(jsonPath("$.[*].crypotogramme").value(hasItem(DEFAULT_CRYPOTOGRAMME.intValue())));
     }
     
@@ -185,7 +187,7 @@ public class PaiementResourceIT {
             .andExpect(jsonPath("$.posseseurCarte").value(DEFAULT_POSSESEUR_CARTE))
             .andExpect(jsonPath("$.typeCarte").value(DEFAULT_TYPE_CARTE))
             .andExpect(jsonPath("$.numeroCarte").value(DEFAULT_NUMERO_CARTE.intValue()))
-            .andExpect(jsonPath("$.dateExp").value(DEFAULT_DATE_EXP))
+            .andExpect(jsonPath("$.dateExp").value(DEFAULT_DATE_EXP.toString()))
             .andExpect(jsonPath("$.crypotogramme").value(DEFAULT_CRYPOTOGRAMME.intValue()));
     }
 

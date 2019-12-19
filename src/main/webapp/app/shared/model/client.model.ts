@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { IPanier } from 'app/shared/model/panier.model';
 import { IAuthentification } from 'app/shared/model/authentification.model';
 
@@ -6,7 +7,7 @@ export interface IClient {
   idClient?: string;
   nomClient?: string;
   prenomClient?: string;
-  dateNaissanceClient?: string;
+  dateNaissanceClient?: Moment;
   adresseClient?: string;
   villeClient?: string;
   paysClient?: string;
@@ -22,7 +23,7 @@ export class Client implements IClient {
     public idClient?: string,
     public nomClient?: string,
     public prenomClient?: string,
-    public dateNaissanceClient?: string,
+    public dateNaissanceClient?: Moment,
     public adresseClient?: string,
     public villeClient?: string,
     public paysClient?: string,

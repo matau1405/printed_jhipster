@@ -3,8 +3,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.Instant;
+
+import fr.inti.printed.domain.enumeration.ModeDeLivraison;
+
+import fr.inti.printed.domain.enumeration.StatusCommande;
 
 /**
  * A Commande.
@@ -21,7 +27,7 @@ public class Commande implements Serializable {
     private String idCmd;
 
     @Field("date_cmd")
-    private String dateCmd;
+    private Instant dateCmd;
 
     @Field("montant_cmd")
     private Float montantCmd;
@@ -36,13 +42,11 @@ public class Commande implements Serializable {
     private String lieuLivraisonCmd;
 
     @Field("mode_livraison_cmd")
-    private String modeLivraisonCmd;
+    private ModeDeLivraison modeLivraisonCmd;
 
-    @Field("prix_total_cmd")
-    private Float prixTotalCmd;
-
-    @Field("mode_paiement")
-    private String modePaiement;
+    @NotNull
+    @Field("status")
+    private StatusCommande status;
 
     @DBRef
     @Field("panier")
@@ -74,16 +78,16 @@ public class Commande implements Serializable {
         this.idCmd = idCmd;
     }
 
-    public String getDateCmd() {
+    public Instant getDateCmd() {
         return dateCmd;
     }
 
-    public Commande dateCmd(String dateCmd) {
+    public Commande dateCmd(Instant dateCmd) {
         this.dateCmd = dateCmd;
         return this;
     }
 
-    public void setDateCmd(String dateCmd) {
+    public void setDateCmd(Instant dateCmd) {
         this.dateCmd = dateCmd;
     }
 
@@ -139,43 +143,30 @@ public class Commande implements Serializable {
         this.lieuLivraisonCmd = lieuLivraisonCmd;
     }
 
-    public String getModeLivraisonCmd() {
+    public ModeDeLivraison getModeLivraisonCmd() {
         return modeLivraisonCmd;
     }
 
-    public Commande modeLivraisonCmd(String modeLivraisonCmd) {
+    public Commande modeLivraisonCmd(ModeDeLivraison modeLivraisonCmd) {
         this.modeLivraisonCmd = modeLivraisonCmd;
         return this;
     }
 
-    public void setModeLivraisonCmd(String modeLivraisonCmd) {
+    public void setModeLivraisonCmd(ModeDeLivraison modeLivraisonCmd) {
         this.modeLivraisonCmd = modeLivraisonCmd;
     }
 
-    public Float getPrixTotalCmd() {
-        return prixTotalCmd;
+    public StatusCommande getStatus() {
+        return status;
     }
 
-    public Commande prixTotalCmd(Float prixTotalCmd) {
-        this.prixTotalCmd = prixTotalCmd;
+    public Commande status(StatusCommande status) {
+        this.status = status;
         return this;
     }
 
-    public void setPrixTotalCmd(Float prixTotalCmd) {
-        this.prixTotalCmd = prixTotalCmd;
-    }
-
-    public String getModePaiement() {
-        return modePaiement;
-    }
-
-    public Commande modePaiement(String modePaiement) {
-        this.modePaiement = modePaiement;
-        return this;
-    }
-
-    public void setModePaiement(String modePaiement) {
-        this.modePaiement = modePaiement;
+    public void setStatus(StatusCommande status) {
+        this.status = status;
     }
 
     public Panier getPanier() {
@@ -232,8 +223,7 @@ public class Commande implements Serializable {
             ", etatLivraisonCmd='" + getEtatLivraisonCmd() + "'" +
             ", lieuLivraisonCmd='" + getLieuLivraisonCmd() + "'" +
             ", modeLivraisonCmd='" + getModeLivraisonCmd() + "'" +
-            ", prixTotalCmd=" + getPrixTotalCmd() +
-            ", modePaiement='" + getModePaiement() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

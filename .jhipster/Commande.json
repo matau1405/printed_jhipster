@@ -7,7 +7,7 @@
         },
         {
             "fieldName": "dateCmd",
-            "fieldType": "String"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "montantCmd",
@@ -27,15 +27,16 @@
         },
         {
             "fieldName": "modeLivraisonCmd",
-            "fieldType": "String"
+            "fieldType": "ModeDeLivraison",
+            "fieldValues": "LivraisonExpress,LivraisonGratuite"
         },
         {
-            "fieldName": "prixTotalCmd",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "modePaiement",
-            "fieldType": "String"
+            "fieldName": "status",
+            "fieldType": "StatusCommande",
+            "fieldValues": "EnCoursDeValidation,EnAttente,Annule,Envoyee",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -56,7 +57,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20191219170400",
+    "changelogDate": "20191219180417",
     "entityTableName": "commande",
     "dto": "no",
     "pagination": "no",

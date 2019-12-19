@@ -1,9 +1,11 @@
+import { Moment } from 'moment';
+
 export interface IPaiement {
   id?: string;
   posseseurCarte?: string;
   typeCarte?: string;
   numeroCarte?: number;
-  dateExp?: string;
+  dateExp?: Moment;
   crypotogramme?: number;
 }
 
@@ -13,7 +15,7 @@ export class Paiement implements IPaiement {
     public posseseurCarte?: string,
     public typeCarte?: string,
     public numeroCarte?: number,
-    public dateExp?: string,
+    public dateExp?: Moment,
     public crypotogramme?: number
   ) {}
 }

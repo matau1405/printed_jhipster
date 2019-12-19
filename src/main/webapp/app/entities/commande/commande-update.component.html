@@ -16,8 +16,9 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_dateCmd">Date Cmd</label>
-                    <input type="text" class="form-control" name="dateCmd" id="field_dateCmd"
-                           formControlName="dateCmd"/>
+                    <div class="d-flex">
+                        <input id="field_dateCmd" type="datetime-local" class="form-control" name="dateCmd" formControlName="dateCmd" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_montantCmd">Montant Cmd</label>
@@ -41,18 +42,25 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_modeLivraisonCmd">Mode Livraison Cmd</label>
-                    <input type="text" class="form-control" name="modeLivraisonCmd" id="field_modeLivraisonCmd"
-                           formControlName="modeLivraisonCmd"/>
+                    <select class="form-control" name="modeLivraisonCmd" formControlName="modeLivraisonCmd" id="field_modeLivraisonCmd">
+                        <option value="LivraisonExpress">LivraisonExpress</option>
+                        <option value="LivraisonGratuite">LivraisonGratuite</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_prixTotalCmd">Prix Total Cmd</label>
-                    <input type="number" class="form-control" name="prixTotalCmd" id="field_prixTotalCmd"
-                           formControlName="prixTotalCmd"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_modePaiement">Mode Paiement</label>
-                    <input type="text" class="form-control" name="modePaiement" id="field_modePaiement"
-                           formControlName="modePaiement"/>
+                    <label class="form-control-label" for="field_status">Status</label>
+                    <select class="form-control" name="status" formControlName="status" id="field_status">
+                        <option value="EnCoursDeValidation">EnCoursDeValidation</option>
+                        <option value="EnAttente">EnAttente</option>
+                        <option value="Annule">Annule</option>
+                        <option value="Envoyee">Envoyee</option>
+                    </select>
+                    <div *ngIf="editForm.get('status').invalid && (editForm.get('status').dirty || editForm.get('status').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('status').errors.required">
+                        This field is required.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">

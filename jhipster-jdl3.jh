@@ -13,25 +13,24 @@ dispo Boolean,
 stock Long,
 marque String,
 personnalisable Boolean,
-imageProd String
-imagePersonnalisation String
+imageProd String,
+imagePersonnalisation String,
+taille Taille
 }
 
 entity Panier {
 idPanier String,
-
 }
 
 entity Commande {
 idCmd String,
-dateCmd String,
+dateCmd Instant,
 montantCmd Float, 
 delaiLivraisonCmd Double,
 etatLivraisonCmd String,
 lieuLivraisonCmd String,
-modeLivraisonCmd String,
-prixTotalCmd Float,
-modePaiement String
+modeLivraisonCmd ModeDeLivraison,
+status StatusCommande required
 }
 
 
@@ -41,7 +40,7 @@ entity Client {
 idClient String,
 nomClient String,
 prenomClient String,
-dateNaissanceClient String,
+dateNaissanceClient Instant,
 adresseClient String required maxlength(100),
 villeClient String,
 paysClient String,
@@ -49,21 +48,30 @@ emailClient String,
 listCommande String
 }
 
-
-
-
-
 entity Paiement {
 posseseurCarte String,
 typeCarte String,
 numeroCarte Long,
-dateExp String,
+dateExp Instant,
 crypotogramme Long
 }
 
 entity Authentification {
 login String,
 passeword String
+}
+
+enum Taille{
+	XS, S, M, L, XL, XXL
+}
+
+
+enum StatusCommande {
+    EnCoursDeValidation, EnAttente, Annule, Envoyee
+}
+
+enum ModeDeLivraison{
+	LivraisonExpress, LivraisonGratuite
 }
 
 

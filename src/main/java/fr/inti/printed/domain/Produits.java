@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.io.Serializable;
 
+import fr.inti.printed.domain.enumeration.Taille;
+
 /**
  * A Produits.
  */
@@ -47,6 +49,9 @@ public class Produits implements Serializable {
 
     @Field("image_personnalisation")
     private String imagePersonnalisation;
+
+    @Field("taille")
+    private Taille taille;
 
     @DBRef
     @Field("panier")
@@ -192,6 +197,19 @@ public class Produits implements Serializable {
         this.imagePersonnalisation = imagePersonnalisation;
     }
 
+    public Taille getTaille() {
+        return taille;
+    }
+
+    public Produits taille(Taille taille) {
+        this.taille = taille;
+        return this;
+    }
+
+    public void setTaille(Taille taille) {
+        this.taille = taille;
+    }
+
     public Panier getPanier() {
         return panier;
     }
@@ -236,6 +254,7 @@ public class Produits implements Serializable {
             ", personnalisable='" + isPersonnalisable() + "'" +
             ", imageProd='" + getImageProd() + "'" +
             ", imagePersonnalisation='" + getImagePersonnalisation() + "'" +
+            ", taille='" + getTaille() + "'" +
             "}";
     }
 }

@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import fr.inti.printed.domain.enumeration.Taille;
 /**
  * Integration tests for the {@link ProduitsResource} REST controller.
  */
@@ -61,6 +62,9 @@ public class ProduitsResourceIT {
 
     private static final String DEFAULT_IMAGE_PERSONNALISATION = "AAAAAAAAAA";
     private static final String UPDATED_IMAGE_PERSONNALISATION = "BBBBBBBBBB";
+
+    private static final Taille DEFAULT_TAILLE = Taille.XS;
+    private static final Taille UPDATED_TAILLE = Taille.S;
 
     @Autowired
     private ProduitsRepository produitsRepository;
@@ -110,7 +114,8 @@ public class ProduitsResourceIT {
             .marque(DEFAULT_MARQUE)
             .personnalisable(DEFAULT_PERSONNALISABLE)
             .imageProd(DEFAULT_IMAGE_PROD)
-            .imagePersonnalisation(DEFAULT_IMAGE_PERSONNALISATION);
+            .imagePersonnalisation(DEFAULT_IMAGE_PERSONNALISATION)
+            .taille(DEFAULT_TAILLE);
         return produits;
     }
     /**
@@ -130,7 +135,8 @@ public class ProduitsResourceIT {
             .marque(UPDATED_MARQUE)
             .personnalisable(UPDATED_PERSONNALISABLE)
             .imageProd(UPDATED_IMAGE_PROD)
-            .imagePersonnalisation(UPDATED_IMAGE_PERSONNALISATION);
+            .imagePersonnalisation(UPDATED_IMAGE_PERSONNALISATION)
+            .taille(UPDATED_TAILLE);
         return produits;
     }
 
@@ -164,6 +170,7 @@ public class ProduitsResourceIT {
         assertThat(testProduits.isPersonnalisable()).isEqualTo(DEFAULT_PERSONNALISABLE);
         assertThat(testProduits.getImageProd()).isEqualTo(DEFAULT_IMAGE_PROD);
         assertThat(testProduits.getImagePersonnalisation()).isEqualTo(DEFAULT_IMAGE_PERSONNALISATION);
+        assertThat(testProduits.getTaille()).isEqualTo(DEFAULT_TAILLE);
     }
 
     @Test
@@ -204,7 +211,8 @@ public class ProduitsResourceIT {
             .andExpect(jsonPath("$.[*].marque").value(hasItem(DEFAULT_MARQUE)))
             .andExpect(jsonPath("$.[*].personnalisable").value(hasItem(DEFAULT_PERSONNALISABLE.booleanValue())))
             .andExpect(jsonPath("$.[*].imageProd").value(hasItem(DEFAULT_IMAGE_PROD)))
-            .andExpect(jsonPath("$.[*].imagePersonnalisation").value(hasItem(DEFAULT_IMAGE_PERSONNALISATION)));
+            .andExpect(jsonPath("$.[*].imagePersonnalisation").value(hasItem(DEFAULT_IMAGE_PERSONNALISATION)))
+            .andExpect(jsonPath("$.[*].taille").value(hasItem(DEFAULT_TAILLE.toString())));
     }
     
     @Test
@@ -226,7 +234,8 @@ public class ProduitsResourceIT {
             .andExpect(jsonPath("$.marque").value(DEFAULT_MARQUE))
             .andExpect(jsonPath("$.personnalisable").value(DEFAULT_PERSONNALISABLE.booleanValue()))
             .andExpect(jsonPath("$.imageProd").value(DEFAULT_IMAGE_PROD))
-            .andExpect(jsonPath("$.imagePersonnalisation").value(DEFAULT_IMAGE_PERSONNALISATION));
+            .andExpect(jsonPath("$.imagePersonnalisation").value(DEFAULT_IMAGE_PERSONNALISATION))
+            .andExpect(jsonPath("$.taille").value(DEFAULT_TAILLE.toString()));
     }
 
     @Test
@@ -255,7 +264,8 @@ public class ProduitsResourceIT {
             .marque(UPDATED_MARQUE)
             .personnalisable(UPDATED_PERSONNALISABLE)
             .imageProd(UPDATED_IMAGE_PROD)
-            .imagePersonnalisation(UPDATED_IMAGE_PERSONNALISATION);
+            .imagePersonnalisation(UPDATED_IMAGE_PERSONNALISATION)
+            .taille(UPDATED_TAILLE);
 
         restProduitsMockMvc.perform(put("/api/produits")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -276,6 +286,7 @@ public class ProduitsResourceIT {
         assertThat(testProduits.isPersonnalisable()).isEqualTo(UPDATED_PERSONNALISABLE);
         assertThat(testProduits.getImageProd()).isEqualTo(UPDATED_IMAGE_PROD);
         assertThat(testProduits.getImagePersonnalisation()).isEqualTo(UPDATED_IMAGE_PERSONNALISATION);
+        assertThat(testProduits.getTaille()).isEqualTo(UPDATED_TAILLE);
     }
 
     @Test

@@ -15,7 +15,7 @@
         },
         {
             "fieldName": "dateNaissanceClient",
-            "fieldType": "String"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "adresseClient",
@@ -61,7 +61,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20191219170401",
+    "changelogDate": "20191219180418",
     "entityTableName": "client",
     "dto": "no",
     "pagination": "no",

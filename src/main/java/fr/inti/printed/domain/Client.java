@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * A Client.
@@ -28,7 +29,7 @@ public class Client implements Serializable {
     private String prenomClient;
 
     @Field("date_naissance_client")
-    private String dateNaissanceClient;
+    private Instant dateNaissanceClient;
 
     @NotNull
     @Size(max = 100)
@@ -103,16 +104,16 @@ public class Client implements Serializable {
         this.prenomClient = prenomClient;
     }
 
-    public String getDateNaissanceClient() {
+    public Instant getDateNaissanceClient() {
         return dateNaissanceClient;
     }
 
-    public Client dateNaissanceClient(String dateNaissanceClient) {
+    public Client dateNaissanceClient(Instant dateNaissanceClient) {
         this.dateNaissanceClient = dateNaissanceClient;
         return this;
     }
 
-    public void setDateNaissanceClient(String dateNaissanceClient) {
+    public void setDateNaissanceClient(Instant dateNaissanceClient) {
         this.dateNaissanceClient = dateNaissanceClient;
     }
 

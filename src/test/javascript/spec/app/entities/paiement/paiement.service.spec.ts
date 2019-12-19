@@ -1,6 +1,8 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { take, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { PaiementService } from 'app/entities/paiement/paiement.service';
 import { IPaiement, Paiement } from 'app/shared/model/paiement.model';
 
@@ -11,6 +13,7 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: IPaiement;
     let expectedResult;
+    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -19,13 +22,19 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(PaiementService);
       httpMock = injector.get(HttpTestingController);
+      currentDate = moment();
 
-      elemDefault = new Paiement('ID', 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA', 0);
+      elemDefault = new Paiement('ID', 'AAAAAAA', 'AAAAAAA', 0, currentDate, 0);
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            dateExp: currentDate.format(DATE_TIME_FORMAT)
+          },
+          elemDefault
+        );
         service
           .find('123')
           .pipe(take(1))
@@ -39,11 +48,17 @@ describe('Service Tests', () => {
       it('should create a Paiement', () => {
         const returnedFromService = Object.assign(
           {
-            id: 'ID'
+            id: 'ID',
+            dateExp: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateExp: currentDate
+          },
+          returnedFromService
+        );
         service
           .create(new Paiement(null))
           .pipe(take(1))
@@ -59,13 +74,18 @@ describe('Service Tests', () => {
             posseseurCarte: 'BBBBBB',
             typeCarte: 'BBBBBB',
             numeroCarte: 1,
-            dateExp: 'BBBBBB',
+            dateExp: currentDate.format(DATE_TIME_FORMAT),
             crypotogramme: 1
           },
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateExp: currentDate
+          },
+          returnedFromService
+        );
         service
           .update(expected)
           .pipe(take(1))
@@ -81,12 +101,17 @@ describe('Service Tests', () => {
             posseseurCarte: 'BBBBBB',
             typeCarte: 'BBBBBB',
             numeroCarte: 1,
-            dateExp: 'BBBBBB',
+            dateExp: currentDate.format(DATE_TIME_FORMAT),
             crypotogramme: 1
           },
           elemDefault
         );
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            dateExp: currentDate
+          },
+          returnedFromService
+        );
         service
           .query(expected)
           .pipe(

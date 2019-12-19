@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,7 +47,7 @@ public class CommandeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/commandes")
-    public ResponseEntity<Commande> createCommande(@RequestBody Commande commande) throws URISyntaxException {
+    public ResponseEntity<Commande> createCommande(@Valid @RequestBody Commande commande) throws URISyntaxException {
         log.debug("REST request to save Commande : {}", commande);
         if (commande.getId() != null) {
             throw new BadRequestAlertException("A new commande cannot already have an ID", ENTITY_NAME, "idexists");
@@ -67,7 +68,7 @@ public class CommandeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/commandes")
-    public ResponseEntity<Commande> updateCommande(@RequestBody Commande commande) throws URISyntaxException {
+    public ResponseEntity<Commande> updateCommande(@Valid @RequestBody Commande commande) throws URISyntaxException {
         log.debug("REST request to update Commande : {}", commande);
         if (commande.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

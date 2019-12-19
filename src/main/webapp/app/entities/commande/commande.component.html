@@ -26,8 +26,7 @@
             <th scope="col" ><span>Etat Livraison Cmd</span></th>
             <th scope="col" ><span>Lieu Livraison Cmd</span></th>
             <th scope="col" ><span>Mode Livraison Cmd</span></th>
-            <th scope="col" ><span>Prix Total Cmd</span></th>
-            <th scope="col" ><span>Mode Paiement</span></th>
+            <th scope="col" ><span>Status</span></th>
             <th scope="col" ><span>Panier</span></th>
             <th scope="col" ><span>Paiement</span></th>
             <th scope="col"></th>
@@ -37,14 +36,13 @@
             <tr *ngFor="let commande of commandes ;trackBy: trackId">
                 <td><a [routerLink]="['/commande', commande.id, 'view' ]">{{commande.id}}</a></td>
                 <td>{{commande.idCmd}}</td>
-                <td>{{commande.dateCmd}}</td>
+                <td>{{commande.dateCmd | date:'medium'}}</td>
                 <td>{{commande.montantCmd}}</td>
                 <td>{{commande.delaiLivraisonCmd}}</td>
                 <td>{{commande.etatLivraisonCmd}}</td>
                 <td>{{commande.lieuLivraisonCmd}}</td>
                 <td>{{commande.modeLivraisonCmd}}</td>
-                <td>{{commande.prixTotalCmd}}</td>
-                <td>{{commande.modePaiement}}</td>
+                <td>{{commande.status}}</td>
                 <td>
                     <div *ngIf="commande.panier">
                         <a [routerLink]="['/panier', commande.panier?.id, 'view' ]" >{{commande.panier?.id}}</a>

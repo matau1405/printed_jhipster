@@ -1,4 +1,5 @@
 import { IPanier } from 'app/shared/model/panier.model';
+import { Taille } from 'app/shared/model/enumerations/taille.model';
 
 export interface IProduits {
   id?: string;
@@ -12,6 +13,7 @@ export interface IProduits {
   personnalisable?: boolean;
   imageProd?: string;
   imagePersonnalisation?: string;
+  taille?: Taille;
   panier?: IPanier;
 }
 
@@ -28,6 +30,7 @@ export class Produits implements IProduits {
     public personnalisable?: boolean,
     public imageProd?: string,
     public imagePersonnalisation?: string,
+    public taille?: Taille,
     public panier?: IPanier
   ) {
     this.dispo = this.dispo || false;

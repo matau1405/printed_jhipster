@@ -4,6 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * A Paiement.
@@ -26,7 +27,7 @@ public class Paiement implements Serializable {
     private Long numeroCarte;
 
     @Field("date_exp")
-    private String dateExp;
+    private Instant dateExp;
 
     @Field("crypotogramme")
     private Long crypotogramme;
@@ -79,16 +80,16 @@ public class Paiement implements Serializable {
         this.numeroCarte = numeroCarte;
     }
 
-    public String getDateExp() {
+    public Instant getDateExp() {
         return dateExp;
     }
 
-    public Paiement dateExp(String dateExp) {
+    public Paiement dateExp(Instant dateExp) {
         this.dateExp = dateExp;
         return this;
     }
 
-    public void setDateExp(String dateExp) {
+    public void setDateExp(Instant dateExp) {
         this.dateExp = dateExp;
     }
 

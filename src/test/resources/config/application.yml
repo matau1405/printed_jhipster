@@ -71,7 +71,7 @@ jhipster:
   security:
     remember-me:
       # security key (this key should be unique for your application, and kept secret)
-      key: 2ebc388903b81f221606181295b93c06e2a6f582be743fb52a26103ecf5c38572f65959c37de125266301243d89d1741452f
+      key: 0968d81ba5e459c35d272b49633f01789202358a383441adda2dd3a56cad7b87e062e98699081f11c6909a4181a1eaa423c6
   metrics:
     logs: # Reports metrics in the logs
       enabled: true

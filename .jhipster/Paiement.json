@@ -15,7 +15,7 @@
         },
         {
             "fieldName": "dateExp",
-            "fieldType": "String"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "crypotogramme",
@@ -23,7 +23,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20191219170402",
+    "changelogDate": "20191219180419",
     "entityTableName": "paiement",
     "dto": "no",
     "pagination": "no",

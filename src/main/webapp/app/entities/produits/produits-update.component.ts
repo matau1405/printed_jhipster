@@ -33,6 +33,7 @@ export class ProduitsUpdateComponent implements OnInit {
     personnalisable: [],
     imageProd: [],
     imagePersonnalisation: [],
+    taille: [],
     panier: []
   });
 
@@ -71,6 +72,7 @@ export class ProduitsUpdateComponent implements OnInit {
       personnalisable: produits.personnalisable,
       imageProd: produits.imageProd,
       imagePersonnalisation: produits.imagePersonnalisation,
+      taille: produits.taille,
       panier: produits.panier
     });
   }
@@ -103,6 +105,7 @@ export class ProduitsUpdateComponent implements OnInit {
       personnalisable: this.editForm.get(['personnalisable']).value,
       imageProd: this.editForm.get(['imageProd']).value,
       imagePersonnalisation: this.editForm.get(['imagePersonnalisation']).value,
+      taille: this.editForm.get(['taille']).value,
       panier: this.editForm.get(['panier']).value
     };
   }

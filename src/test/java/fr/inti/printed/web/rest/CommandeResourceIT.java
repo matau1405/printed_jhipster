@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
 
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static fr.inti.printed.web.rest.TestUtil.createFormattingConversionService;
@@ -26,6 +28,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import fr.inti.printed.domain.enumeration.ModeDeLivraison;
+import fr.inti.printed.domain.enumeration.StatusCommande;
 /**
  * Integration tests for the {@link CommandeResource} REST controller.
  */
@@ -35,8 +39,8 @@ public class CommandeResourceIT {
     private static final String DEFAULT_ID_CMD = "AAAAAAAAAA";
     private static final String UPDATED_ID_CMD = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DATE_CMD = "AAAAAAAAAA";
-    private static final String UPDATED_DATE_CMD = "BBBBBBBBBB";
+    private static final Instant DEFAULT_DATE_CMD = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_CMD = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Float DEFAULT_MONTANT_CMD = 1F;
     private static final Float UPDATED_MONTANT_CMD = 2F;
@@ -50,14 +54,11 @@ public class CommandeResourceIT {
     private static final String DEFAULT_LIEU_LIVRAISON_CMD = "AAAAAAAAAA";
     private static final String UPDATED_LIEU_LIVRAISON_CMD = "BBBBBBBBBB";
 
-    private static final String DEFAULT_MODE_LIVRAISON_CMD = "AAAAAAAAAA";
-    private static final String UPDATED_MODE_LIVRAISON_CMD = "BBBBBBBBBB";
+    private static final ModeDeLivraison DEFAULT_MODE_LIVRAISON_CMD = ModeDeLivraison.LivraisonExpress;
+    private static final ModeDeLivraison UPDATED_MODE_LIVRAISON_CMD = ModeDeLivraison.LivraisonGratuite;
 
-    private static final Float DEFAULT_PRIX_TOTAL_CMD = 1F;
-    private static final Float UPDATED_PRIX_TOTAL_CMD = 2F;
-
-    private static final String DEFAULT_MODE_PAIEMENT = "AAAAAAAAAA";
-    private static final String UPDATED_MODE_PAIEMENT = "BBBBBBBBBB";
+    private static final StatusCommande DEFAULT_STATUS = StatusCommande.EnCoursDeValidation;
+    private static final StatusCommande UPDATED_STATUS = StatusCommande.EnAttente;
 
     @Autowired
     private CommandeRepository commandeRepository;
@@ -105,8 +106,7 @@ public class CommandeResourceIT {
             .etatLivraisonCmd(DEFAULT_ETAT_LIVRAISON_CMD)
             .lieuLivraisonCmd(DEFAULT_LIEU_LIVRAISON_CMD)
             .modeLivraisonCmd(DEFAULT_MODE_LIVRAISON_CMD)
-            .prixTotalCmd(DEFAULT_PRIX_TOTAL_CMD)
-            .modePaiement(DEFAULT_MODE_PAIEMENT);
+            .status(DEFAULT_STATUS);
         return commande;
     }
     /**
@@ -124,8 +124,7 @@ public class CommandeResourceIT {
             .etatLivraisonCmd(UPDATED_ETAT_LIVRAISON_CMD)
             .lieuLivraisonCmd(UPDATED_LIEU_LIVRAISON_CMD)
             .modeLivraisonCmd(UPDATED_MODE_LIVRAISON_CMD)
-            .prixTotalCmd(UPDATED_PRIX_TOTAL_CMD)
-            .modePaiement(UPDATED_MODE_PAIEMENT);
+            .status(UPDATED_STATUS);
         return commande;
     }
 
@@ -156,8 +155,7 @@ public class CommandeResourceIT {
         assertThat(testCommande.getEtatLivraisonCmd()).isEqualTo(DEFAULT_ETAT_LIVRAISON_CMD);
         assertThat(testCommande.getLieuLivraisonCmd()).isEqualTo(DEFAULT_LIEU_LIVRAISON_CMD);
         assertThat(testCommande.getModeLivraisonCmd()).isEqualTo(DEFAULT_MODE_LIVRAISON_CMD);
-        assertThat(testCommande.getPrixTotalCmd()).isEqualTo(DEFAULT_PRIX_TOTAL_CMD);
-        assertThat(testCommande.getModePaiement()).isEqualTo(DEFAULT_MODE_PAIEMENT);
+        assertThat(testCommande.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -180,6 +178,23 @@ public class CommandeResourceIT {
 
 
     @Test
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = commandeRepository.findAll().size();
+        // set the field null
+        commande.setStatus(null);
+
+        // Create the Commande, which fails.
+
+        restCommandeMockMvc.perform(post("/api/commandes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(commande)))
+            .andExpect(status().isBadRequest());
+
+        List<Commande> commandeList = commandeRepository.findAll();
+        assertThat(commandeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
     public void getAllCommandes() throws Exception {
         // Initialize the database
         commandeRepository.save(commande);
@@ -190,14 +205,13 @@ public class CommandeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(commande.getId())))
             .andExpect(jsonPath("$.[*].idCmd").value(hasItem(DEFAULT_ID_CMD)))
-            .andExpect(jsonPath("$.[*].dateCmd").value(hasItem(DEFAULT_DATE_CMD)))
+            .andExpect(jsonPath("$.[*].dateCmd").value(hasItem(DEFAULT_DATE_CMD.toString())))
             .andExpect(jsonPath("$.[*].montantCmd").value(hasItem(DEFAULT_MONTANT_CMD.doubleValue())))
             .andExpect(jsonPath("$.[*].delaiLivraisonCmd").value(hasItem(DEFAULT_DELAI_LIVRAISON_CMD.doubleValue())))
             .andExpect(jsonPath("$.[*].etatLivraisonCmd").value(hasItem(DEFAULT_ETAT_LIVRAISON_CMD)))
             .andExpect(jsonPath("$.[*].lieuLivraisonCmd").value(hasItem(DEFAULT_LIEU_LIVRAISON_CMD)))
-            .andExpect(jsonPath("$.[*].modeLivraisonCmd").value(hasItem(DEFAULT_MODE_LIVRAISON_CMD)))
-            .andExpect(jsonPath("$.[*].prixTotalCmd").value(hasItem(DEFAULT_PRIX_TOTAL_CMD.doubleValue())))
-            .andExpect(jsonPath("$.[*].modePaiement").value(hasItem(DEFAULT_MODE_PAIEMENT)));
+            .andExpect(jsonPath("$.[*].modeLivraisonCmd").value(hasItem(DEFAULT_MODE_LIVRAISON_CMD.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -211,14 +225,13 @@ public class CommandeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(commande.getId()))
             .andExpect(jsonPath("$.idCmd").value(DEFAULT_ID_CMD))
-            .andExpect(jsonPath("$.dateCmd").value(DEFAULT_DATE_CMD))
+            .andExpect(jsonPath("$.dateCmd").value(DEFAULT_DATE_CMD.toString()))
             .andExpect(jsonPath("$.montantCmd").value(DEFAULT_MONTANT_CMD.doubleValue()))
             .andExpect(jsonPath("$.delaiLivraisonCmd").value(DEFAULT_DELAI_LIVRAISON_CMD.doubleValue()))
             .andExpect(jsonPath("$.etatLivraisonCmd").value(DEFAULT_ETAT_LIVRAISON_CMD))
             .andExpect(jsonPath("$.lieuLivraisonCmd").value(DEFAULT_LIEU_LIVRAISON_CMD))
-            .andExpect(jsonPath("$.modeLivraisonCmd").value(DEFAULT_MODE_LIVRAISON_CMD))
-            .andExpect(jsonPath("$.prixTotalCmd").value(DEFAULT_PRIX_TOTAL_CMD.doubleValue()))
-            .andExpect(jsonPath("$.modePaiement").value(DEFAULT_MODE_PAIEMENT));
+            .andExpect(jsonPath("$.modeLivraisonCmd").value(DEFAULT_MODE_LIVRAISON_CMD.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -245,8 +258,7 @@ public class CommandeResourceIT {
             .etatLivraisonCmd(UPDATED_ETAT_LIVRAISON_CMD)
             .lieuLivraisonCmd(UPDATED_LIEU_LIVRAISON_CMD)
             .modeLivraisonCmd(UPDATED_MODE_LIVRAISON_CMD)
-            .prixTotalCmd(UPDATED_PRIX_TOTAL_CMD)
-            .modePaiement(UPDATED_MODE_PAIEMENT);
+            .status(UPDATED_STATUS);
 
         restCommandeMockMvc.perform(put("/api/commandes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -264,8 +276,7 @@ public class CommandeResourceIT {
         assertThat(testCommande.getEtatLivraisonCmd()).isEqualTo(UPDATED_ETAT_LIVRAISON_CMD);
         assertThat(testCommande.getLieuLivraisonCmd()).isEqualTo(UPDATED_LIEU_LIVRAISON_CMD);
         assertThat(testCommande.getModeLivraisonCmd()).isEqualTo(UPDATED_MODE_LIVRAISON_CMD);
-        assertThat(testCommande.getPrixTotalCmd()).isEqualTo(UPDATED_PRIX_TOTAL_CMD);
-        assertThat(testCommande.getModePaiement()).isEqualTo(UPDATED_MODE_PAIEMENT);
+        assertThat(testCommande.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

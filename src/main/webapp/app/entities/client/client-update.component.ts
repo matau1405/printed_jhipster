@@ -6,6 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { IClient, Client } from 'app/shared/model/client.model';
 import { ClientService } from './client.service';
@@ -112,7 +114,7 @@ export class ClientUpdateComponent implements OnInit {
       idClient: client.idClient,
       nomClient: client.nomClient,
       prenomClient: client.prenomClient,
-      dateNaissanceClient: client.dateNaissanceClient,
+      dateNaissanceClient: client.dateNaissanceClient != null ? client.dateNaissanceClient.format(DATE_TIME_FORMAT) : null,
       adresseClient: client.adresseClient,
       villeClient: client.villeClient,
       paysClient: client.paysClient,
@@ -144,7 +146,10 @@ export class ClientUpdateComponent implements OnInit {
       idClient: this.editForm.get(['idClient']).value,
       nomClient: this.editForm.get(['nomClient']).value,
       prenomClient: this.editForm.get(['prenomClient']).value,
-      dateNaissanceClient: this.editForm.get(['dateNaissanceClient']).value,
+      dateNaissanceClient:
+        this.editForm.get(['dateNaissanceClient']).value != null
+          ? moment(this.editForm.get(['dateNaissanceClient']).value, DATE_TIME_FORMAT)
+          : undefined,
       adresseClient: this.editForm.get(['adresseClient']).value,
       villeClient: this.editForm.get(['villeClient']).value,
       paysClient: this.editForm.get(['paysClient']).value,
