@@ -1,0 +1,27 @@
+{
+    "name": "Panier",
+    "fields": [
+        {
+            "fieldName": "idPanier",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "produits",
+            "otherEntityRelationshipName": "panier",
+            "relationshipName": "produits"
+        }
+    ],
+    "changelogDate": "20191219170359",
+    "entityTableName": "panier",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

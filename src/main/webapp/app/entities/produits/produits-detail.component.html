@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="produits">
+            <h2><span>Produits</span> {{produits.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Id Prod</span></dt>
+                <dd>
+                    <span>{{produits.idProd}}</span>
+                </dd>
+                <dt><span>Nom Prod</span></dt>
+                <dd>
+                    <span>{{produits.nomProd}}</span>
+                </dd>
+                <dt><span>Description Prod</span></dt>
+                <dd>
+                    <span>{{produits.descriptionProd}}</span>
+                </dd>
+                <dt><span>Prix Prod</span></dt>
+                <dd>
+                    <span>{{produits.prixProd}}</span>
+                </dd>
+                <dt><span>Dispo</span></dt>
+                <dd>
+                    <span>{{produits.dispo}}</span>
+                </dd>
+                <dt><span>Stock</span></dt>
+                <dd>
+                    <span>{{produits.stock}}</span>
+                </dd>
+                <dt><span>Marque</span></dt>
+                <dd>
+                    <span>{{produits.marque}}</span>
+                </dd>
+                <dt><span>Personnalisable</span></dt>
+                <dd>
+                    <span>{{produits.personnalisable}}</span>
+                </dd>
+                <dt><span>Image Prod</span></dt>
+                <dd>
+                    <span>{{produits.imageProd}}</span>
+                </dd>
+                <dt><span>Image Personnalisation</span></dt>
+                <dd>
+                    <span>{{produits.imagePersonnalisation}}</span>
+                </dd>
+                <dt><span>Panier</span></dt>
+                <dd>
+                    <div *ngIf="produits.panier">
+                        <a [routerLink]="['/panier', produits.panier?.id, 'view']">{{produits.panier?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/produits', produits.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

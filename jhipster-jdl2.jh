@@ -1,0 +1,97 @@
+
+
+
+
+
+
+entity Produits {
+idProd String,
+nomProd String,
+descriptionProd String,
+prixProd String,
+dispo Boolean,
+stock Long,
+marque String,
+personnalisable Boolean,
+imageProd String
+imagePersonnalisation String
+}
+
+entity Panier {
+idPanier String,
+
+}
+
+entity Commande {
+idCmd String,
+dateCmd String,
+montantCmd Float, 
+delaiLivraisonCmd Double,
+etatLivraisonCmd String,
+lieuLivraisonCmd String,
+modeLivraisonCmd String,
+prixTotalCmd Float,
+modePaiement String
+}
+
+
+
+
+entity Client {
+idClient String,
+nomClient String,
+prenomClient String,
+dateNaissanceClient String,
+adresseClient String required maxlength(100),
+villeClient String,
+paysClient String,
+emailClient String,
+listCommande String
+}
+
+
+
+
+
+entity Paiement {
+posseseurCarte String,
+typeCarte String,
+numeroCarte Long,
+dateExp String,
+crypotogramme Long
+}
+
+entity Authentification {
+login String,
+passeword String
+}
+
+
+
+relationship OneToMany {
+	Panier {produits} to Produits
+}
+
+
+
+relationship OneToOne {
+	Client {panier} to Panier
+}
+
+relationship OneToOne {
+	Commande {Panier} to Panier
+}
+
+relationship OneToOne {
+	Client {Paiement} to Authentification
+}
+
+relationship OneToOne {
+	Authentification  {Paiement} to Paiement
+}
+
+
+
+relationship OneToOne {
+	Commande {Paiement} to Paiement 
+}

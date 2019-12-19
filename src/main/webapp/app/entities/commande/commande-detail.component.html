@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="commande">
+            <h2><span>Commande</span> {{commande.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Id Cmd</span></dt>
+                <dd>
+                    <span>{{commande.idCmd}}</span>
+                </dd>
+                <dt><span>Date Cmd</span></dt>
+                <dd>
+                    <span>{{commande.dateCmd}}</span>
+                </dd>
+                <dt><span>Montant Cmd</span></dt>
+                <dd>
+                    <span>{{commande.montantCmd}}</span>
+                </dd>
+                <dt><span>Delai Livraison Cmd</span></dt>
+                <dd>
+                    <span>{{commande.delaiLivraisonCmd}}</span>
+                </dd>
+                <dt><span>Etat Livraison Cmd</span></dt>
+                <dd>
+                    <span>{{commande.etatLivraisonCmd}}</span>
+                </dd>
+                <dt><span>Lieu Livraison Cmd</span></dt>
+                <dd>
+                    <span>{{commande.lieuLivraisonCmd}}</span>
+                </dd>
+                <dt><span>Mode Livraison Cmd</span></dt>
+                <dd>
+                    <span>{{commande.modeLivraisonCmd}}</span>
+                </dd>
+                <dt><span>Prix Total Cmd</span></dt>
+                <dd>
+                    <span>{{commande.prixTotalCmd}}</span>
+                </dd>
+                <dt><span>Mode Paiement</span></dt>
+                <dd>
+                    <span>{{commande.modePaiement}}</span>
+                </dd>
+                <dt><span>Panier</span></dt>
+                <dd>
+                    <div *ngIf="commande.panier">
+                        <a [routerLink]="['/panier', commande.panier?.id, 'view']">{{commande.panier?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Paiement</span></dt>
+                <dd>
+                    <div *ngIf="commande.paiement">
+                        <a [routerLink]="['/paiement', commande.paiement?.id, 'view']">{{commande.paiement?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/commande', commande.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

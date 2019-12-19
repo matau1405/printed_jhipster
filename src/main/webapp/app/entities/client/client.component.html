@@ -1,0 +1,86 @@
+<div>
+    <h2 id="page-heading">
+        <span>Clients</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-client" [routerLink]="['/client/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create a new Client
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="clients?.length === 0">
+        <span>No clients found</span>
+    </div>
+    <div class="table-responsive" *ngIf="clients?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th scope="col" ><span>ID</span></th>
+            <th scope="col" ><span>Id Client</span></th>
+            <th scope="col" ><span>Nom Client</span></th>
+            <th scope="col" ><span>Prenom Client</span></th>
+            <th scope="col" ><span>Date Naissance Client</span></th>
+            <th scope="col" ><span>Adresse Client</span></th>
+            <th scope="col" ><span>Ville Client</span></th>
+            <th scope="col" ><span>Pays Client</span></th>
+            <th scope="col" ><span>Email Client</span></th>
+            <th scope="col" ><span>List Commande</span></th>
+            <th scope="col" ><span>Panier</span></th>
+            <th scope="col" ><span>Paiement</span></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let client of clients ;trackBy: trackId">
+                <td><a [routerLink]="['/client', client.id, 'view' ]">{{client.id}}</a></td>
+                <td>{{client.idClient}}</td>
+                <td>{{client.nomClient}}</td>
+                <td>{{client.prenomClient}}</td>
+                <td>{{client.dateNaissanceClient}}</td>
+                <td>{{client.adresseClient}}</td>
+                <td>{{client.villeClient}}</td>
+                <td>{{client.paysClient}}</td>
+                <td>{{client.emailClient}}</td>
+                <td>{{client.listCommande}}</td>
+                <td>
+                    <div *ngIf="client.panier">
+                        <a [routerLink]="['/panier', client.panier?.id, 'view' ]" >{{client.panier?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="client.paiement">
+                        <a [routerLink]="['/authentification', client.paiement?.id, 'view' ]" >{{client.paiement?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/client', client.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/client', client.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/client', { outlets: { popup: client.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

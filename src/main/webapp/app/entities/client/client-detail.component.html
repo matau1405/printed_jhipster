@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="client">
+            <h2><span>Client</span> {{client.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Id Client</span></dt>
+                <dd>
+                    <span>{{client.idClient}}</span>
+                </dd>
+                <dt><span>Nom Client</span></dt>
+                <dd>
+                    <span>{{client.nomClient}}</span>
+                </dd>
+                <dt><span>Prenom Client</span></dt>
+                <dd>
+                    <span>{{client.prenomClient}}</span>
+                </dd>
+                <dt><span>Date Naissance Client</span></dt>
+                <dd>
+                    <span>{{client.dateNaissanceClient}}</span>
+                </dd>
+                <dt><span>Adresse Client</span></dt>
+                <dd>
+                    <span>{{client.adresseClient}}</span>
+                </dd>
+                <dt><span>Ville Client</span></dt>
+                <dd>
+                    <span>{{client.villeClient}}</span>
+                </dd>
+                <dt><span>Pays Client</span></dt>
+                <dd>
+                    <span>{{client.paysClient}}</span>
+                </dd>
+                <dt><span>Email Client</span></dt>
+                <dd>
+                    <span>{{client.emailClient}}</span>
+                </dd>
+                <dt><span>List Commande</span></dt>
+                <dd>
+                    <span>{{client.listCommande}}</span>
+                </dd>
+                <dt><span>Panier</span></dt>
+                <dd>
+                    <div *ngIf="client.panier">
+                        <a [routerLink]="['/panier', client.panier?.id, 'view']">{{client.panier?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Paiement</span></dt>
+                <dd>
+                    <div *ngIf="client.paiement">
+                        <a [routerLink]="['/authentification', client.paiement?.id, 'view']">{{client.paiement?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/client', client.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

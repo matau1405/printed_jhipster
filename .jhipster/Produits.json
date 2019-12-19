@@ -1,0 +1,63 @@
+{
+    "name": "Produits",
+    "fields": [
+        {
+            "fieldName": "idProd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nomProd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descriptionProd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prixProd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dispo",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "stock",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "marque",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "personnalisable",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "imageProd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imagePersonnalisation",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "panier",
+            "otherEntityName": "panier",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20191219170358",
+    "entityTableName": "produits",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

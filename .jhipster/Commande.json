@@ -1,0 +1,69 @@
+{
+    "name": "Commande",
+    "fields": [
+        {
+            "fieldName": "idCmd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateCmd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "montantCmd",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "delaiLivraisonCmd",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "etatLivraisonCmd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lieuLivraisonCmd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modeLivraisonCmd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prixTotalCmd",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "modePaiement",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "panier",
+            "otherEntityRelationshipName": "commande",
+            "relationshipName": "panier",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "paiement",
+            "otherEntityRelationshipName": "commande",
+            "relationshipName": "paiement",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20191219170400",
+    "entityTableName": "commande",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

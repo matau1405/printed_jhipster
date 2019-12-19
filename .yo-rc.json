@@ -21,7 +21,7 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "rememberMeKey": "121d805118d9916380543a5b92ad2e3abf243fb9e139c54089c4ec4f8c6139f1e102dc11d3faaafffb032648c400452531da",
+    "rememberMeKey": "2ebc388903b81f221606181295b93c06e2a6f582be743fb52a26103ecf5c38572f65959c37de125266301243d89d1741452f",
     "embeddableLaunchScript": false,
     "useSass": true,
     "clientPackageManager": "npm",

@@ -1,0 +1,82 @@
+<div>
+    <h2 id="page-heading">
+        <span>Produits</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-produits" [routerLink]="['/produits/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create a new Produits
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="produits?.length === 0">
+        <span>No produits found</span>
+    </div>
+    <div class="table-responsive" *ngIf="produits?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th scope="col" ><span>ID</span></th>
+            <th scope="col" ><span>Id Prod</span></th>
+            <th scope="col" ><span>Nom Prod</span></th>
+            <th scope="col" ><span>Description Prod</span></th>
+            <th scope="col" ><span>Prix Prod</span></th>
+            <th scope="col" ><span>Dispo</span></th>
+            <th scope="col" ><span>Stock</span></th>
+            <th scope="col" ><span>Marque</span></th>
+            <th scope="col" ><span>Personnalisable</span></th>
+            <th scope="col" ><span>Image Prod</span></th>
+            <th scope="col" ><span>Image Personnalisation</span></th>
+            <th scope="col" ><span>Panier</span></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let produits of produits ;trackBy: trackId">
+                <td><a [routerLink]="['/produits', produits.id, 'view' ]">{{produits.id}}</a></td>
+                <td>{{produits.idProd}}</td>
+                <td>{{produits.nomProd}}</td>
+                <td>{{produits.descriptionProd}}</td>
+                <td>{{produits.prixProd}}</td>
+                <td>{{produits.dispo}}</td>
+                <td>{{produits.stock}}</td>
+                <td>{{produits.marque}}</td>
+                <td>{{produits.personnalisable}}</td>
+                <td>{{produits.imageProd}}</td>
+                <td>{{produits.imagePersonnalisation}}</td>
+                <td>
+                    <div *ngIf="produits.panier">
+                        <a [routerLink]="['/panier', produits.panier?.id, 'view' ]" >{{produits.panier?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/produits', produits.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/produits', produits.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/produits', { outlets: { popup: produits.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

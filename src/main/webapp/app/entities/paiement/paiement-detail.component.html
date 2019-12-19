@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="paiement">
+            <h2><span>Paiement</span> {{paiement.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Posseseur Carte</span></dt>
+                <dd>
+                    <span>{{paiement.posseseurCarte}}</span>
+                </dd>
+                <dt><span>Type Carte</span></dt>
+                <dd>
+                    <span>{{paiement.typeCarte}}</span>
+                </dd>
+                <dt><span>Numero Carte</span></dt>
+                <dd>
+                    <span>{{paiement.numeroCarte}}</span>
+                </dd>
+                <dt><span>Date Exp</span></dt>
+                <dd>
+                    <span>{{paiement.dateExp}}</span>
+                </dd>
+                <dt><span>Crypotogramme</span></dt>
+                <dd>
+                    <span>{{paiement.crypotogramme}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/paiement', paiement.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

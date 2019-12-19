@@ -1,0 +1,36 @@
+{
+    "name": "Paiement",
+    "fields": [
+        {
+            "fieldName": "posseseurCarte",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "typeCarte",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numeroCarte",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "dateExp",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "crypotogramme",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20191219170402",
+    "entityTableName": "paiement",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,74 @@
+{
+    "name": "Client",
+    "fields": [
+        {
+            "fieldName": "idClient",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nomClient",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prenomClient",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateNaissanceClient",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "adresseClient",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "villeClient",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paysClient",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "emailClient",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "listCommande",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "panier",
+            "otherEntityRelationshipName": "client",
+            "relationshipName": "panier",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "authentification",
+            "otherEntityRelationshipName": "client",
+            "relationshipName": "paiement",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20191219170401",
+    "entityTableName": "client",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}
